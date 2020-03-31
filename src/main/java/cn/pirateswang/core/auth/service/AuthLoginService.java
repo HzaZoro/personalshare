@@ -1,4 +1,4 @@
-package cn.pirateswang.personalshare.core.auth.service;
+package cn.pirateswang.core.auth.service;
 
 public interface AuthLoginService {
 }

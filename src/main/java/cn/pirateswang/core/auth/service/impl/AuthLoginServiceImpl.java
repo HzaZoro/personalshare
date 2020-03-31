@@ -1,6 +1,6 @@
-package cn.pirateswang.personalshare.core.auth.service.impl;
+package cn.pirateswang.core.auth.service.impl;
 
-import cn.pirateswang.personalshare.core.auth.service.AuthLoginService;
+import cn.pirateswang.core.auth.service.AuthLoginService;
 import org.springframework.stereotype.Service;
 
 @Service
