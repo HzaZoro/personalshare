@@ -1,7 +1,6 @@
-package cn.pirateswang.personalshare.core.auth.controller;
+package cn.pirateswang.core.auth.controller;
 
 public class AuthLoginController {
-
 
 
 }
