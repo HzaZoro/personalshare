@@ -12,7 +12,14 @@ public enum ErrorEnum {
     TOKEN_VERIFY_FAILURE(3,"token验证不通过"),
     TOKEN_VERIFY_EXCEPTION(4,"token验证异常"),
     TOKEN_OVERDUE(5,"登录超时"),
-    COOKIE_IS_NULL(6,"Cookie获取失败")
+    COOKIE_IS_NULL(6,"Cookie获取失败"),
+    
+    
+    REQUEST_PARAM_IS_NULL(15,"请求参数为空"),
+    
+    
+    LOGIN_USER_NAME_IS_NULL(20,"用户名未填写"),
+    LOGIN_PASSWORD_IS_NULL(21,"密码未填写"),
     
     ;    
     

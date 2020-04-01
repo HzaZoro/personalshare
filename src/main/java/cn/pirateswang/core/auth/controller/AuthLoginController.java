@@ -1,8 +1,14 @@
 package cn.pirateswang.core.auth.controller;
 
-public class AuthLoginController {
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-    //测试代码冲突
+@RestController
+@RequestMapping(value = "/auth")
+public class AuthLoginController {
+    
+    
+    
 
 
 }
