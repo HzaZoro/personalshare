@@ -1,4 +1,4 @@
-package cn.pirateswang.common;
+package cn.pirateswang.common.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,14 +19,10 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         log.info("============>AuthFilter-------->doFilter 【START】");
-
-
-
-
-
-
-
-
+        
+        
+        
+        
         filterChain.doFilter(servletRequest,servletResponse);
         log.info("<============AuthFilter<--------doFilter 【E N D】");
     }
