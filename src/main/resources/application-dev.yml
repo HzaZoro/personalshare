@@ -27,3 +27,10 @@ server:
   servlet:
     context-path: /personalShare
   port: 8080
+
+#日志输出相关配置
+logging:
+  file:
+    path: H:\data\logs\personalshare
+  pattern:
+    level: info
