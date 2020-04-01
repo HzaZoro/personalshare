@@ -6,11 +6,11 @@ import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.PostConstruct;
 
-public class SpringUtils implements ApplicationContextAware {
+public class SpringUtil implements ApplicationContextAware {
     
     private ApplicationContext context = null;
     
-    private static SpringUtils self ;
+    private static SpringUtil self ;
     
     @PostConstruct
     public void init(){

@@ -4,7 +4,7 @@ import cn.pirateswang.common.publicEnum.ErrorEnum;
 import cn.pirateswang.common.publicVO.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 
-public class ResultVOUtils {
+public class ResultVOUtil {
     
     public static <T> ResultVO<T> success(T object){
         ResultVO<T> resultVO = new ResultVO<>();
@@ -31,6 +31,14 @@ public class ResultVOUtils {
         resultVO.setMsg(errorEnum.getMsg() + (StringUtils.isBlank(customMsg) ? "": ("," + customMsg)));
         resultVO.setData(data);
         return resultVO;
+    }
+    
+    public static boolean checkResultSuccess(ResultVO result){
+        boolean flag = false;
+        if(result != null && result.getCode() != null && result.getCode().intValue() == ErrorEnum.SUCCESS.getCode().intValue()){
+            flag = true;                
+        }
+        return flag;
     }
     
     

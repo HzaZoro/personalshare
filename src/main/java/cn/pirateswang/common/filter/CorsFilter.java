@@ -1,7 +1,7 @@
 package cn.pirateswang.common.filter;
 
 import cn.pirateswang.common.config.TokenConfig;
-import cn.pirateswang.common.utils.SpringUtils;
+import cn.pirateswang.common.utils.SpringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -24,7 +24,7 @@ public class CorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         if(tokenConfig == null){
-            tokenConfig = SpringUtils.getBean(TokenConfig.class);
+            tokenConfig = SpringUtil.getBean(TokenConfig.class);
         }
     }
 
@@ -36,7 +36,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Origin", StringUtils.isBlank(request.getHeader("origin")) ? "*" : request.getHeader("origin"));
         response.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PUT,OPTIONS,HEAD");
         response.setHeader("Access-Control-Max-Age","7200");
-        response.setHeader("Access-Control-Allow-Headers","x-requested-with,Authorization,Content-Type,sign,source,"+tokenConfig.getTokenName());
+        response.setHeader("Access-Control-Allow-Headers","x-requested-with,Authorization,Content-Type,sign,source,"+tokenConfig.getCookieName());
         response.setHeader("Access-Control-Allow-Credentials","true");
         chain.doFilter(servletRequest,servletResponse);
     }

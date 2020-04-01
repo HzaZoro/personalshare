@@ -36,7 +36,13 @@ server:
 #    level: info
 
 token:
-  tokenName: personalToken
+  cookieName: personalToken
+  cookieSecrete: AHUMAN
+  effectiveTime: 7200
+  exclude:
+    urls:
+      - /auth/
+      - /userTest
     
 service:
   blackVisitList:
