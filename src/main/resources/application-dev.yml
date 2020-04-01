@@ -34,3 +34,11 @@ logging:
     path: H:\data\logs\personalshare
   pattern:
     level: info
+
+token:
+  tokenName: personalToken
+    
+service:
+  whiteListDomainList: 
+    - 192.168.10.172
+    - 192.168.1.11
