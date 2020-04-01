@@ -2,6 +2,7 @@ package cn.pirateswang.common.filter;
 
 import cn.pirateswang.common.config.TokenConfig;
 import cn.pirateswang.common.utils.SpringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,8 @@ public class CorsFilter implements Filter {
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        response.setHeader("Access-Control-Allow-Origin",request.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PUT,OPTIONS");
+        response.setHeader("Access-Control-Allow-Origin", StringUtils.isBlank(request.getHeader("origin")) ? "*" : request.getHeader("origin"));
+        response.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PUT,OPTIONS,HEAD");
         response.setHeader("Access-Control-Max-Age","7200");
         response.setHeader("Access-Control-Allow-Headers","x-requested-with,Authorization,Content-Type,sign,source,"+tokenConfig.getTokenName());
         response.setHeader("Access-Control-Allow-Credentials","true");

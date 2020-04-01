@@ -10,6 +10,16 @@ import java.util.List;
 public class ServiceConfig {
     
     private List<String> whiteListDomainList;
+    
+    private List<String> blackVisitList;
+
+    public List<String> getBlackVisitList() {
+        return blackVisitList;
+    }
+
+    public void setBlackVisitList(List<String> blackVisitList) {
+        this.blackVisitList = blackVisitList;
+    }
 
     public List<String> getWhiteListDomainList() {
         return whiteListDomainList;

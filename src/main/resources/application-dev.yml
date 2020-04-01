@@ -29,16 +29,20 @@ server:
   port: 8080
 
 #日志输出相关配置
-logging:
-  file:
-    path: H:\data\logs\personalshare
-  pattern:
-    level: info
+  #logging:
+    #  file:
+  #    path: H:\data\logs\personalshare
+    #  pattern:
+#    level: info
 
 token:
   tokenName: personalToken
     
 service:
+  blackVisitList:
+    -192.168.1.172
+  
   whiteListDomainList: 
     - 192.168.10.172
     - 192.168.1.11
+    - pirateswang.cn
