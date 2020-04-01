@@ -53,8 +53,8 @@ service:
     - 192.168.1.11
     - pirateswang.cn
 
-  userLoginRsaPublicKey:
-  userLoginRsaPrivateKey:
+  userLoginRsaPublicKey: cert/Login_public_Rsa_key.txt
+  userLoginRsaPrivateKey: cert/Login_private_Rsa_key.txt
 
 #该配置用于数据库字段下划线与实体类属性驼峰互转
 mybatis:

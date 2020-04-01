@@ -16,7 +16,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<UserInfoEntity> findByLoginName(String loginName) {
-
         return mapper.findByLoginName(loginName);
     }
 }

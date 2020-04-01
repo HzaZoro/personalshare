@@ -3,9 +3,11 @@ package cn.pirateswang.common.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+@Component
 public class SpringUtil implements ApplicationContextAware {
     
     private ApplicationContext context = null;
@@ -19,7 +21,7 @@ public class SpringUtil implements ApplicationContextAware {
     
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = context;
+        this.context = applicationContext;
     }
     
     public static Object getBean(String name){
