@@ -173,14 +173,7 @@ public class AuthFilter implements Filter {
                         filterChain.doFilter(request,response);
                     }
                 }
-
-
             }
-            
-            
-            
-            
-            
         }
         
         
