@@ -49,18 +49,20 @@ public class AuthLoginServiceImpl implements AuthLoginService {
         log.info("验证用户密码是否正确");
         List<UserInfoEntity> userList = userInfoService.findByLoginName(loginName);
         if(userList == null || userList.isEmpty()){
-
-
+            log.info("【登录失败】通过该用户名未查询到用户信息,loginName:{}",loginName);
+            return ResultVOUtil.error(ErrorEnum.USER_INFO_IS_NOT_EXIST);
         }
 
         if(userList.size() > 1){
-
+            log.info("【登录失败】通过该用户名:{} 查询到{}条用户记录",loginName,userList.size());
+            return ResultVOUtil.error(ErrorEnum.USER_INFO_MORE_THAN_ONE);
         }
 
         UserInfoEntity userInfo = userList.get(0);
         String localPassword = userInfo.getPassword();
         if(StringUtils.isBlank(localPassword)){
-
+            log.info("【登录失败】系统未设置该用户的密码");
+            return ResultVOUtil.error(ErrorEnum.SYSTEM_USER_INFO_ERROR);
         }
 
         try {
