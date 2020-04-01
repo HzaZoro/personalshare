@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    data-username: root
-    data-password: H19931001521
+    username: root
+    password: H19931001521
     url: jdbc:mysql://127.0.0.1:3306/pw_ps?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -55,4 +55,8 @@ service:
 
   userLoginRsaPublicKey:
   userLoginRsaPrivateKey:
-  
+
+#该配置用于数据库字段下划线与实体类属性驼峰互转
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

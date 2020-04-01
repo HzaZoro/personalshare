@@ -174,14 +174,8 @@ public class AuthFilter implements Filter {
                     }
                 }
             }
+            filterChain.doFilter(request,response);
         }
-        
-        
-        
-        
-
-
-        filterChain.doFilter(servletRequest,servletResponse);
         log.info("<============AuthFilter<--------doFilter 【E N D】");
     }
     
