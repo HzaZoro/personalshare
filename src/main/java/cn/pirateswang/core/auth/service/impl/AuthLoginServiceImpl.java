@@ -65,8 +65,8 @@ public class AuthLoginServiceImpl implements AuthLoginService {
 
         try {
             //私钥解密前端传入密码
-            String decryPassword = RSAUtil.decryptByPrivateKey(password);
-            String decryLocalPassword = RSAUtil.decryptByPrivateKey(localPassword);
+            String decryPassword = RSAUtil.decryptByPriKey(password);
+            String decryLocalPassword = RSAUtil.decryptByPriKey(localPassword);
             if(!StringUtils.equals(decryPassword,decryLocalPassword)){
                 log.info("【登录失败】密码有误");
 

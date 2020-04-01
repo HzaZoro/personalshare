@@ -1,6 +1,5 @@
 package cn.pirateswang.core.user.controller;
 
-import cn.pirateswang.common.utils.RSAUtil;
 import cn.pirateswang.common.utils.SpringUtil;
 import cn.pirateswang.core.user.entity.UserInfoEntity;
 import cn.pirateswang.core.user.service.UserInfoService;
@@ -11,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/userTest")
@@ -31,22 +28,22 @@ public class UserTest {
         return JSON.toJSONString(userInfoList);
     }
 
-    @GetMapping("/getKey")
-    public String getKey() throws NoSuchAlgorithmException {
-        Map<String, Object> stringObjectMap = RSAUtil.genKeyPair();
-        String publicKey = RSAUtil.getPublicKey(stringObjectMap);
-        String privateKey = RSAUtil.getPrivateKey(stringObjectMap);
-        System.out.println("公钥: "+publicKey);
-        System.out.println("私钥: "+privateKey);
-        return publicKey + " ======== " + privateKey;
-    }
+//    @GetMapping("/getKey")
+//    public String getKey() throws NoSuchAlgorithmException {
+//        Map<String, Object> stringObjectMap = RSAUtil.genKeyPair();
+//        String publicKey = RSAUtil.getPublicKey(stringObjectMap);
+//        String privateKey = RSAUtil.getPrivateKey(stringObjectMap);
+//        System.out.println("公钥: "+publicKey);
+//        System.out.println("私钥: "+privateKey);
+//        return publicKey + " ======== " + privateKey;
+//    }
 
-    @GetMapping("/test")
-    public String test() throws Exception {
-        String data = "EncryPt";
-        String s = RSAUtil.encryptByPublicKey(data);
-        return s;
-    }
+//    @GetMapping("/test")
+//    public String test() throws Exception {
+//        String data = "EncryPt";
+//        String s = RSAUtil.encryptByPublicKey(data);
+//        return s;
+//    }
 
 
 }
