@@ -1,5 +1,7 @@
 package cn.pirateswang.core.auth.controller;
 
+import cn.pirateswang.common.publicVO.CurrentUser;
+import cn.pirateswang.common.publicVO.ResultVO;
 import cn.pirateswang.core.auth.dto.AuthLoginDTO;
 import cn.pirateswang.core.auth.service.AuthLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,8 @@ public class AuthLoginController {
     private AuthLoginService authLoginService;
 
     @PostMapping("/login")
-    public void login(@RequestBody AuthLoginDTO loginDTO){
-        authLoginService.login(loginDTO);
+    public ResultVO<CurrentUser> login(@RequestBody AuthLoginDTO loginDTO){
+        return authLoginService.login(loginDTO);
     }
     
 

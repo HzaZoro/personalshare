@@ -5,6 +5,8 @@ public class CurrentUser {
     private Long id;
     
     private String userName;
+
+    private String userSex;
     
     private Integer age;
 
@@ -30,5 +32,13 @@ public class CurrentUser {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
     }
 }

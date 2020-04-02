@@ -21,6 +21,7 @@ public enum ErrorEnum {
     LOGIN_USER_NAME_IS_NULL(20,"用户名未填写"),
     LOGIN_PASSWORD_IS_NULL(21,"密码未填写"),
     SYSTEM_USER_INFO_ERROR(22,"系统设置用户信息有误"),
+    PASSWORD_ERROR(23,"密码有误"),
     USER_INFO_IS_NOT_EXIST(25,"用户信息不存在"),
     USER_INFO_MORE_THAN_ONE(26,"查询到多条用户信息"),
     ;    
