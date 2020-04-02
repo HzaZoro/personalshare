@@ -72,7 +72,7 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
             t.setLastModifyUserName(currentUser.getUserName());
             t.setDeleteFlg(0);
             t.setVersion(1L);
-            return mapper.insertUseGeneratedKeys(t);
+            return mapper.insertSelective(t);
         }else{
             t.setLastModifyUserName(currentUser.getUserName());
             t.setLastModifyUserId(currentUser.getId());

@@ -1,4 +1,4 @@
-package cn.pirateswang.core.SystemAccessRecord.entity;
+package cn.pirateswang.core.systemAccessRecord.entity;
 
 import cn.pirateswang.common.base.entity.BaseEntity;
 
@@ -21,7 +21,7 @@ public class SystemAccessRecordEntity extends BaseEntity {
     /**
      * 访问源IP
      */
-    private String IP;
+    private String ip;
 
     /**
      * 访问目的端口
@@ -44,9 +44,19 @@ public class SystemAccessRecordEntity extends BaseEntity {
     private String requestPath;
 
     /**
-     * 访问用户类型 1:系统注册用户  2:游客
+     * 请求返回码
      */
-    private Integer userVisitType;
+    private Integer responseCode;
+
+    /**
+     * 请求返回信息
+     */
+    private String responseMsg;
+
+    /**
+     * 接口处理时长 单位：毫秒
+     */
+    private Long processingTime;
 
     public Long getUserId() {
         return userId;
@@ -56,12 +66,12 @@ public class SystemAccessRecordEntity extends BaseEntity {
         this.userId = userId;
     }
 
-    public String getIP() {
-        return IP;
+    public String getIp() {
+        return ip;
     }
 
-    public void setIP(String IP) {
-        this.IP = IP;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public Integer getPort() {
@@ -96,11 +106,27 @@ public class SystemAccessRecordEntity extends BaseEntity {
         this.requestPath = requestPath;
     }
 
-    public Integer getUserVisitType() {
-        return userVisitType;
+    public Integer getResponseCode() {
+        return responseCode;
     }
 
-    public void setUserVisitType(Integer userVisitType) {
-        this.userVisitType = userVisitType;
+    public void setResponseCode(Integer responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public String getResponseMsg() {
+        return responseMsg;
+    }
+
+    public void setResponseMsg(String responseMsg) {
+        this.responseMsg = responseMsg;
+    }
+
+    public Long getProcessingTime() {
+        return processingTime;
+    }
+
+    public void setProcessingTime(Long processingTime) {
+        this.processingTime = processingTime;
     }
 }

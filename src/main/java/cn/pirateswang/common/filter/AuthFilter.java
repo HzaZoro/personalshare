@@ -6,7 +6,8 @@ import cn.pirateswang.common.publicEnum.ErrorEnum;
 import cn.pirateswang.common.publicVO.CurrentUser;
 import cn.pirateswang.common.publicVO.ResultVO;
 import cn.pirateswang.common.utils.*;
-import cn.pirateswang.core.SystemAccessRecord.service.SystemAccessRecordService;
+import cn.pirateswang.core.systemAccessRecord.entity.SystemAccessRecordEntity;
+import cn.pirateswang.core.systemAccessRecord.service.SystemAccessRecordService;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +63,7 @@ public class AuthFilter implements Filter {
         log.info("============>AuthFilter-------->doFilter 【START】");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        
+        Date currentDate = new Date();
         response.setContentType(CONTENT_TYPE);
 
         //请求方法
@@ -76,6 +78,8 @@ public class AuthFilter implements Filter {
         
         String ip = StringUtils.isBlank(request.getHeader("x-forwarded-for")) ? request.getRemoteAddr():request.getHeader("x-forwarded-for");
         log.info("【访问IP】: {}",ip);
+        int serverPort = request.getServerPort();
+        log.info("【访问端口】: {}",serverPort);
 
         if(StringUtils.isBlank(ip)){
             log.info("访问IP为空,验证不通过");
@@ -83,6 +87,17 @@ public class AuthFilter implements Filter {
             response.getWriter().flush();
             return;
         }
+
+        SystemAccessRecordEntity systemAccessRecordEntity = new SystemAccessRecordEntity();
+        //访问IP
+        systemAccessRecordEntity.setIp(ip);
+        //访问端口
+        systemAccessRecordEntity.setPort(serverPort);
+        //访问开始时间
+        systemAccessRecordEntity.setRequestStartTime(currentDate);
+        //访问路径
+        systemAccessRecordEntity.setRequestPath(servletPath);
+        
         
         //系统访问黑名单设置
         List<String> blackVisitList = serviceConfig.getBlackVisitList();
@@ -92,6 +107,7 @@ public class AuthFilter implements Filter {
                 log.info("该访问【IP】: {}，被系统限制访问",ip);
                 response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_VISIT)));
                 response.getWriter().flush();
+                this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_VISIT);
                 return;
             }else{
                 log.info("访问IP未在系统设置【黑名单】内");
@@ -105,6 +121,7 @@ public class AuthFilter implements Filter {
             log.info("系统未设置【白名单】，请先前往设置");
             response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_DOMAIN)));
             response.getWriter().flush();
+            this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_DOMAIN);
             return;
         }
 
@@ -115,11 +132,13 @@ public class AuthFilter implements Filter {
             log.info("访问的域名为空,验证不通过");
             response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_DOMAIN)));
             response.getWriter().flush();
+            this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_DOMAIN);
             return;
         }else if(!checkDomain(serverName,whiteListDomainList)){
             log.info("访问的域名未在系统白名单内,【serverName】: {}",serverName);
             response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_DOMAIN)));
             response.getWriter().flush();
+            this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_DOMAIN);
             return;
         }else{
             log.info("访问的域名在系统【白名单】中");
@@ -129,6 +148,7 @@ public class AuthFilter implements Filter {
             log.info("请求方法为【OPTIONS】,请求成功");
             response.getWriter().write(JSON.toJSONString(ResultVOUtil.success()));
             response.getWriter().flush();
+            this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.SUCCESS);
             return;
         }else{
             boolean urlNeedCheck = true;
@@ -159,6 +179,7 @@ public class AuthFilter implements Filter {
                     log.info("未获取到相关cookieName:{},cookie获取失败",tokenConfig.getCookieName());
                     response.getWriter().write(JSON.toJSONString(ErrorEnum.COOKIE_IS_NULL));
                     response.getWriter().flush();
+                    this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.COOKIE_IS_NULL);
                     return;
                 }else{
                     String token = cookie.getValue();
@@ -169,10 +190,19 @@ public class AuthFilter implements Filter {
                         log.info("请求token验证失败");
                         response.getWriter().write(JSON.toJSONString(result));
                         response.getWriter().flush();
+
+                        Date endDate = new Date();
+                        systemAccessRecordEntity.setRequestEndTime(endDate);
+                        systemAccessRecordEntity.setResponseCode(result == null ? null : result.getCode());
+                        systemAccessRecordEntity.setResponseMsg(result == null ? null : result.getMsg());
+                        systemAccessRecordEntity.setProcessingTime(Math.abs(endDate.getTime() - systemAccessRecordEntity.getRequestStartTime().getTime()));
+                        systemAccessRecordService.save(systemAccessRecordEntity);
+                        
                         return;
                     }else{
                         CurrentUser currentUser = result.getData();
                         CookieUtil.setCookie(response,currentUser);
+                        systemAccessRecordEntity.setUserId(currentUser.getId());
                         request.getSession().setAttribute(Repository.REQUEST_ATTRIBUTE.CURRENT_LOGIN_USER,currentUser);
                         filterChain.doFilter(request,response);
                     }
@@ -180,7 +210,17 @@ public class AuthFilter implements Filter {
             }
             filterChain.doFilter(request,response);
         }
+        this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.SUCCESS);
         log.info("<============AuthFilter<--------doFilter 【E N D】");
+    }
+    
+    public void insertSystemRecord(SystemAccessRecordEntity entity,ErrorEnum errorEnum){
+        Date endDate = new Date();
+        entity.setRequestEndTime(endDate);
+        entity.setResponseCode(errorEnum.getCode());
+        entity.setResponseMsg(errorEnum.getMsg());
+        entity.setProcessingTime(Math.abs(endDate.getTime() - entity.getRequestStartTime().getTime()));
+        systemAccessRecordService.save(entity);
     }
     
     public boolean checkDomain(String serverName,List<String> checkList){
