@@ -1,6 +1,6 @@
 package cn.pirateswang.core.user.mapper;
 
-import cn.pirateswang.common.base.BaseMapper;
+import cn.pirateswang.common.base.mapper.BaseMapper;
 import cn.pirateswang.core.user.entity.UserInfoEntity;
 import cn.pirateswang.core.user.mapper.sql.UserInfoProvider;
 import org.apache.ibatis.annotations.Mapper;

@@ -41,4 +41,12 @@ public class CurrentUser {
     public void setUserSex(String userSex) {
         this.userSex = userSex;
     }
+
+    public CurrentUser(Long id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
+
+    public CurrentUser() {
+    }
 }

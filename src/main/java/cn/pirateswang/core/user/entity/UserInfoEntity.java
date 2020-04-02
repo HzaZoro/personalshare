@@ -1,6 +1,6 @@
 package cn.pirateswang.core.user.entity;
 
-import cn.pirateswang.common.base.BaseEntity;
+import cn.pirateswang.common.base.entity.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

@@ -1,5 +1,6 @@
 package cn.pirateswang.core.user.service.impl;
 
+import cn.pirateswang.common.base.service.Impl.BaseServiceImpl;
 import cn.pirateswang.core.user.entity.UserInfoEntity;
 import cn.pirateswang.core.user.mapper.UserInfoMapper;
 import cn.pirateswang.core.user.service.UserInfoService;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoEntity> implements UserInfoService {
 
     @Autowired
     private UserInfoMapper mapper;

@@ -1,5 +1,6 @@
-package cn.pirateswang.common.base;
+package cn.pirateswang.common.base.mapper;
 
+import cn.pirateswang.common.base.entity.BaseEntity;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 import tk.mybatis.mapper.common.ids.SelectByIdsMapper;

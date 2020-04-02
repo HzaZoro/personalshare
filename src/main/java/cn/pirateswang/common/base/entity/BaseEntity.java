@@ -1,4 +1,4 @@
-package cn.pirateswang.common.base;
+package cn.pirateswang.common.base.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

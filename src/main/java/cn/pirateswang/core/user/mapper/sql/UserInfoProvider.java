@@ -1,6 +1,6 @@
 package cn.pirateswang.core.user.mapper.sql;
 
-import cn.pirateswang.common.base.BaseSqlProvider;
+import cn.pirateswang.common.base.mapper.sql.BaseSqlProvider;
 import org.apache.ibatis.annotations.Param;
 
 public class UserInfoProvider extends BaseSqlProvider {

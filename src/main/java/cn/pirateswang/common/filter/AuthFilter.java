@@ -6,6 +6,7 @@ import cn.pirateswang.common.publicEnum.ErrorEnum;
 import cn.pirateswang.common.publicVO.CurrentUser;
 import cn.pirateswang.common.publicVO.ResultVO;
 import cn.pirateswang.common.utils.*;
+import cn.pirateswang.core.SystemAccessRecord.service.SystemAccessRecordService;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public class AuthFilter implements Filter {
     
     @Autowired
     private ServiceConfig serviceConfig;
+    
+    @Autowired
+    private SystemAccessRecordService systemAccessRecordService;
 
     private static Set<String> cacheUrlBuffer = new HashSet<>();
     
