@@ -25,7 +25,7 @@ public class ArticleController {
     }
 
     @PostMapping("/update")
-    public ResultVO<?> update(ArticleUpdateDTO requestDTO){
+    public ResultVO<?> update(@RequestBody ArticleUpdateDTO requestDTO){
         return articleService.update(requestDTO);
     }
 
