@@ -204,7 +204,6 @@ public class AuthFilter implements Filter {
                         CookieUtil.setCookie(response,currentUser);
                         systemAccessRecordEntity.setUserId(currentUser.getId());
                         request.getSession().setAttribute(Repository.REQUEST_ATTRIBUTE.CURRENT_LOGIN_USER,currentUser);
-                        filterChain.doFilter(request,response);
                     }
                 }
             }
