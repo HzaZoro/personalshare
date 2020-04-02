@@ -26,8 +26,7 @@ public class ArticleController {
     
     @PostMapping("/create")
     public ResultVO<?> create(@RequestBody ArticleCreateDTO requestDTO){
-        
-        return null;
+        return articleService.create(requestDTO);
     }
     
     
