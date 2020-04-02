@@ -8,5 +8,6 @@ public interface AuthLoginService {
     
     public ResultVO<CurrentUser> login(AuthLoginDTO loginDTO);
     
+    public void logOut();
     
 }

@@ -101,7 +101,30 @@ public class AuthLoginServiceImpl implements AuthLoginService {
         log.info("<=====AuthLoginServiceImpl<-----login 【E N D】");
         return ResultVOUtil.success(currentUser);
     }
-    
+
+    @Override
+    public void logOut() {
+        log.info("=====>AuthLoginServiceImpl----->logOut 【START】");
+        if(request != null){
+            Object attribute = request.getSession().getAttribute(Repository.REQUEST_ATTRIBUTE.CURRENT_LOGIN_USER);
+            if(attribute != null){
+                CurrentUser currentUser = (CurrentUser) attribute;
+                log.info("【注销登录】注销用户：{} ",currentUser.getUserName());
+                request.getSession().removeAttribute(Repository.REQUEST_ATTRIBUTE.CURRENT_LOGIN_USER);
+                log.info("【注销登录】清空用户session信息,注销用户：{} ",currentUser.getUserName());                
+                CookieUtil.clearCookie(response);
+                log.info("【注销登录】清空响应Cookie信息",currentUser.getUserName());
+                log.info("【注销登录】用户:{} 已注销登录",currentUser.getUserName());
+            }else{
+                log.info("【注销登录】未发现相关登录用户信息");
+            }
+        }else{
+            log.info("【注销登录】未发现相关请求信息");
+        }
+
+        log.info("<=====AuthLoginServiceImpl<-----logOut 【E N D】");
+    }
+
     public ResultVO<CurrentUser> sendErrorBack(HttpServletResponse response,ErrorEnum errorEnum){
         CookieUtil.clearCookie(response);
         return ResultVOUtil.error(errorEnum);
