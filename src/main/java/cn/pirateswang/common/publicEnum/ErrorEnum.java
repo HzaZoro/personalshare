@@ -29,6 +29,8 @@ public enum ErrorEnum {
     ARTICLE_TITLE_IS_NULL(50,"文章标题未填写"),
     ARTICLE_CLASSIFY_ID_IS_NULL(51,"文章分类未选择"),
     ARTICLE_CLASSIFY_IS_NULL(52,"文章分类不存在或已删除"),
+    ARTICLE_ID_IS_NULL(53,"文章主键ID为空"),
+    ARTICLE_IS_NULL(54,"文章信息不存在或已被删除"),
     
     ;    
     

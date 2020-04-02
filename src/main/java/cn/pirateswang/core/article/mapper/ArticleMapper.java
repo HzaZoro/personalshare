@@ -1,6 +1,7 @@
 package cn.pirateswang.core.article.mapper;
 
 import cn.pirateswang.common.base.mapper.BaseMapper;
+import cn.pirateswang.core.article.dto.ArticleDetailDTO;
 import cn.pirateswang.core.article.dto.ArticlePageResponseDTO;
 import cn.pirateswang.core.article.entity.ArticleEntity;
 import cn.pirateswang.core.article.mapper.sql.ArticleProvider;
@@ -16,5 +17,7 @@ public interface ArticleMapper extends BaseMapper<ArticleEntity> {
     
     @SelectProvider(type = ArticleProvider.class,method = "queryByParams")
     public List<ArticlePageResponseDTO> queryByParams(@Param("articleTitle") String articleTitle, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
-    
+
+    @SelectProvider(type = ArticleProvider.class,method = "detail")
+    public ArticleDetailDTO detail(@Param("articleId") Long articleId );
 }

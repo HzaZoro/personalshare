@@ -12,8 +12,8 @@ public class ArticleProvider extends BaseSqlProvider {
                                 @Param("endDate") Date endDate){
         StringBuffer sql = new StringBuffer();
         sql.append(" select a.id,a.article_date,a.article_title,a.article_views,a.classify_id,a.user_id,u.user_name,c.classify_name from article a ");
-        sql.append(" left join user_info u on a.user_id = u.id ");
-        sql.append(" left join article_classify c on c.id = a.classify_id ");
+        sql.append(" left join user_info u on a.user_id = u.id and u.delete_flg = 0 ");
+        sql.append(" left join article_classify c on c.id = a.classify_id and c.delete_flg = 0 ");
         sql.append(" where a.delete_flg = 0 and a.in_use = 1  ");
         if(StringUtils.isNotBlank(articleTitle)){
             sql.append(" and a.article_title like %#{articleTitle}% ");
@@ -25,6 +25,15 @@ public class ArticleProvider extends BaseSqlProvider {
             sql.append(" and a.article_date <= #{endDate} ");
         }
         sql.append(" order by a.article_date desc ");
+        return sql.toString();
+    }
+
+    public String detail(@Param("articleId") Long articleId ){
+        StringBuffer sql = new StringBuffer();
+        sql.append(" select a.article_title,a.article_date,a.article_views,a.classify_id,a.id,a.user_id,u.user_name,c.classify_name ");
+        sql.append(" from article a left join article_classify c on a.classify_id = c.id and c.delete_flg = 0 ");
+        sql.append(" left join user_info u on a.user_id = u.id and u.delete_flg = 0 ");
+        sql.append(" where a.delete_flg = 0 and a.in_use = 1 and a.id = #{articleId} ");
         return sql.toString();
     }
     

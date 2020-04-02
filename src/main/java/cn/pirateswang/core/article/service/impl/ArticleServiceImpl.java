@@ -5,9 +5,7 @@ import cn.pirateswang.common.publicEnum.ErrorEnum;
 import cn.pirateswang.common.publicVO.CurrentUser;
 import cn.pirateswang.common.publicVO.ResultVO;
 import cn.pirateswang.common.utils.ResultVOUtil;
-import cn.pirateswang.core.article.dto.ArticleCreateDTO;
-import cn.pirateswang.core.article.dto.ArticlePageRequestDTO;
-import cn.pirateswang.core.article.dto.ArticlePageResponseDTO;
+import cn.pirateswang.core.article.dto.*;
 import cn.pirateswang.core.article.entity.ArticleEntity;
 import cn.pirateswang.core.article.mapper.ArticleMapper;
 import cn.pirateswang.core.article.service.ArticleService;
@@ -114,5 +112,128 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
 
         log.info("<=====ArticleServiceImpl<-----create【E N D】");
         return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO<?> update(ArticleUpdateDTO requestDTO) {
+        log.info("=====>ArticleServiceImpl----->update【START】");
+        log.info("【更新文章】REQUEST:{}",JSON.toJSONString(requestDTO));
+
+        String articleTitle = requestDTO.getArticleTitle();
+        Long classifyId = requestDTO.getClassifyId();
+        Long id = requestDTO.getId();
+        if(id == null){
+            log.info("【更新文章】article表主键ID为空");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_ID_IS_NULL);
+        }
+        if(StringUtils.isBlank(articleTitle)){
+            log.info("【更新文章】文章标题未填写");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_TITLE_IS_NULL);
+        }
+        if(classifyId == null){
+            log.info("【更新文章】文章分类未选择");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_CLASSIFY_ID_IS_NULL);
+        }
+
+        ArticleEntity articleEntity = this.getUnDeleted(id);
+        if(articleEntity == null){
+            log.info("【更新文章】该文章信息不存在或已被删除");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_IS_NULL);
+        }
+
+        ArticleClassifyEntity classifyEntity = articleClassifyService.getUnDeleted(classifyId);
+        if(classifyEntity == null){
+            log.info("【更新文章】文章分类不存在或已删除");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_CLASSIFY_IS_NULL);
+        }
+
+        if(articleEntity.getClassifyId() == null || articleEntity.getClassifyId().longValue() != classifyId.longValue()){
+            log.info("【更新文章】文章分类ID已改变,原分类ID:{} ----> 现分类ID:{} ",articleEntity.getClassifyId(),classifyId);
+            articleEntity.setClassifyId(classifyId);
+        }else{
+            log.info("【更新文章】文章分类未发生改变");
+        }
+
+        if(!StringUtils.equals(articleTitle,articleEntity.getArticleTitle())){
+            log.info("【更新文章】文章标题已改变，原文章标题：{} ----> 现文章标题: {}",articleEntity.getArticleTitle(),articleTitle);
+            articleEntity.setArticleTitle(articleTitle);
+        }else{
+            log.info("【更新文章】文章标题未发生改变");
+        }
+
+        ArticleContentEntity articleContentEntity = null;
+        List<ArticleContentEntity> articlContentList = articleContentService.findArticlContentByArticlId(id);
+        if(articlContentList == null || articlContentList.isEmpty()){
+            log.info("【更新文章】未发现相关文章内容信息,新增一条文件内容信息");
+            articleContentEntity = new ArticleContentEntity();
+        }else if(articlContentList.size() == 1){
+            log.info("【更新文章】发现一条文章内容信息");
+            articleContentEntity = articlContentList.get(0);
+        }else{
+            log.info("【更新文章】发现{}条文章内容信息,需删除多余记录",articlContentList.size());
+            for(int cnt = 0;cnt < articlContentList.size();cnt ++){
+                ArticleContentEntity articleContent = articlContentList.get(cnt);
+                if(cnt == 0){
+                    log.info("【更新文章】保留该文章内容信息,主键ID:{}",articleContent.getId());
+                    articleContentEntity = articleContent;
+                }else{
+                    log.info("【更新文章】该文章内容需删除,主键ID:{}",articleContent.getId());
+                    articleContent.setDeleteFlg(1);
+                    articleContentService.save(articleContent);
+                }
+            }
+        }
+
+        articleContentEntity.setArticleContent(StringUtils.isBlank(requestDTO.getArticleContent())? StringUtils.EMPTY:requestDTO.getArticleContent());
+        articleContentService.save(articleContentEntity);
+        this.save(articleEntity);
+        log.info("【更新文章】文章内容已更新");
+        log.info("<=====ArticleServiceImpl<-----update【E N D】");
+        return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO<ArticleDetailDTO> detail(Long articleId) {
+        log.info("=====>ArticleServiceImpl----->detail【START】");
+        log.info("【文章详情】REQUEST: 文章主键ID: {}",articleId);
+
+        if(articleId == null){
+            log.info("【文章详情】article表主键ID为空");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_ID_IS_NULL);
+        }
+
+        ArticleDetailDTO detail = articleMapper.detail(articleId);
+        if(detail == null){
+            log.info("【文章详情】未发现文章详情信息,该详情不存在或已删除,articleId:{}",articleId);
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_IS_NULL);
+        }
+
+        ArticleContentEntity articleContentEntity = null;
+        List<ArticleContentEntity> articlContentList = articleContentService.findArticlContentByArticlId(articleId);
+        if(articlContentList == null || articlContentList.isEmpty()){
+            log.info("【文章详情】未发现相关文章内容信息");
+            articleContentEntity = new ArticleContentEntity();
+        }else if(articlContentList.size() == 1){
+            log.info("【文章详情】发现一条文章内容信息");
+            articleContentEntity = articlContentList.get(0);
+        }else{
+            log.info("【文章详情】发现{}条文章内容信息,需删除多余记录",articlContentList.size());
+            for(int cnt = 0;cnt < articlContentList.size();cnt ++){
+                ArticleContentEntity articleContent = articlContentList.get(cnt);
+                if(cnt == 0){
+                    log.info("【文章详情】保留该文章内容信息,主键ID:{}",articleContent.getId());
+                    articleContentEntity = articleContent;
+                }else{
+                    log.info("【文章详情】该文章内容需删除,主键ID:{}",articleContent.getId());
+                    articleContent.setDeleteFlg(1);
+                    articleContentService.save(articleContent);
+                }
+            }
+        }
+
+        detail.setArticleContent(articleContentEntity.getArticleContent());
+        log.info("【文章详情】已查询出文章相关信息");
+        log.info("<=====ArticleServiceImpl<-----detail【E N D】");
+        return ResultVOUtil.success(detail);
     }
 }
