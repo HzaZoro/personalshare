@@ -6,8 +6,11 @@ import cn.pirateswang.common.publicVO.ResultVO;
 import cn.pirateswang.core.article.dto.ArticlePageRequestDTO;
 import cn.pirateswang.core.article.dto.ArticlePageResponseDTO;
 import cn.pirateswang.core.article.entity.ArticleEntity;
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 public interface ArticleService extends BaseService<ArticleEntity> {
     
-    public ResultVO<PageDTO<ArticlePageResponseDTO>> page(ArticlePageRequestDTO requestDTO);
+    public ResultVO<PageInfo<ArticlePageResponseDTO>> page(ArticlePageRequestDTO requestDTO);
 }

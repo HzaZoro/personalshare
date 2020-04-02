@@ -13,6 +13,7 @@ import cn.pirateswang.core.article.service.ArticleService;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
     private ArticleMapper articleMapper;
 
     @Override
-    public ResultVO<PageDTO<ArticlePageResponseDTO>> page(ArticlePageRequestDTO requestDTO) {
+    public ResultVO<PageInfo<ArticlePageResponseDTO>> page(ArticlePageRequestDTO requestDTO) {
         log.info("=====>ArticleServiceImpl----->page【START】");
         log.info("【查询文章分页】REQUEST:{}", JSON.toJSONString(requestDTO));
         if(requestDTO == null){
@@ -44,13 +45,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
         }else{
             log.info("【查询文章分页】未查询到相关记录");
         }
-        PageDTO<ArticlePageResponseDTO> pageDTO = new PageDTO<>();
-        pageDTO.setPageNo(requestDTO.getPageNo());
-        pageDTO.setPageSize(requestDTO.getPageSize());
-        pageDTO.setTotalCount(page.getTotal());
-        pageDTO.setResult(articleList);
-
+        PageInfo<ArticlePageResponseDTO> pageInfo = new PageInfo<ArticlePageResponseDTO>(articleList);
+        
         log.info("<=====ArticleServiceImpl<-----page【E N D】");
-        return ResultVOUtil.success(pageDTO);
+        return ResultVOUtil.success(pageInfo);
     }
 }
