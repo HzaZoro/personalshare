@@ -1,4 +1,4 @@
-package cn.pirateswang.common.base.service.Impl;
+package cn.pirateswang.common.base.service.impl;
 
 import cn.pirateswang.common.base.entity.BaseEntity;
 import cn.pirateswang.common.base.mapper.BaseMapper;

@@ -1,6 +1,6 @@
 package cn.pirateswang.core.user.service.impl;
 
-import cn.pirateswang.common.base.service.Impl.BaseServiceImpl;
+import cn.pirateswang.common.base.service.impl.BaseServiceImpl;
 import cn.pirateswang.core.user.entity.UserInfoEntity;
 import cn.pirateswang.core.user.mapper.UserInfoMapper;
 import cn.pirateswang.core.user.service.UserInfoService;
