@@ -24,6 +24,12 @@ public enum ErrorEnum {
     PASSWORD_ERROR(23,"密码有误"),
     USER_INFO_IS_NOT_EXIST(25,"用户信息不存在"),
     USER_INFO_MORE_THAN_ONE(26,"查询到多条用户信息"),
+    
+    
+    ARTICLE_TITLE_IS_NULL(50,"文章标题未填写"),
+    ARTICLE_CLASSIFY_ID_IS_NULL(51,"文章分类未选择"),
+    ARTICLE_CLASSIFY_IS_NULL(52,"文章分类不存在或已删除"),
+    
     ;    
     
     private Integer code;

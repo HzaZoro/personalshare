@@ -1,7 +1,7 @@
 package cn.pirateswang.core.article.controller;
 
-import cn.pirateswang.common.publicVO.PageDTO;
 import cn.pirateswang.common.publicVO.ResultVO;
+import cn.pirateswang.core.article.dto.ArticleCreateDTO;
 import cn.pirateswang.core.article.dto.ArticlePageRequestDTO;
 import cn.pirateswang.core.article.dto.ArticlePageResponseDTO;
 import cn.pirateswang.core.article.service.ArticleService;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/article")
@@ -24,6 +22,12 @@ public class ArticleController {
     @PostMapping("/page")
     public ResultVO<PageInfo<ArticlePageResponseDTO>> page(@RequestBody ArticlePageRequestDTO requestDTO){
         return articleService.page(requestDTO);
+    }
+    
+    @PostMapping("/create")
+    public ResultVO<?> create(@RequestBody ArticleCreateDTO requestDTO){
+        
+        return null;
     }
     
     
