@@ -48,6 +48,7 @@ token:
   exclude:
     urls:
       - /auth/
+      - /article/
     
 service:
   whiteListDomainList: 
