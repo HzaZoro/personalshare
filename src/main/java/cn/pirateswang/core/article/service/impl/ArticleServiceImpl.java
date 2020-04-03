@@ -161,6 +161,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
             log.info("【更新文章】文章标题未发生改变");
         }
 
+        articleEntity.setArticleSynopsis(requestDTO.getArticleSynopsis());
+
         ArticleContentEntity articleContentEntity = null;
         List<ArticleContentEntity> articlContentList = articleContentService.findArticlContentByArticlId(id);
         if(articlContentList == null || articlContentList.isEmpty()){

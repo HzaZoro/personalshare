@@ -8,6 +8,11 @@ public class ArticleCreateDTO {
     private String articleTitle;
 
     /**
+     * 文章简介
+     */
+    private String articleSynopsis;
+
+    /**
      * 文章分类ID
      */
     private Long classifyId;
@@ -39,5 +44,13 @@ public class ArticleCreateDTO {
 
     public void setArticleContent(String articleContent) {
         this.articleContent = articleContent;
+    }
+
+    public String getArticleSynopsis() {
+        return articleSynopsis;
+    }
+
+    public void setArticleSynopsis(String articleSynopsis) {
+        this.articleSynopsis = articleSynopsis;
     }
 }

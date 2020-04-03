@@ -14,6 +14,8 @@ public class ArticleDetailDTO {
 
     private String articleTitle;
 
+    private String articleSynopsis;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:ss:mm")
     private Date articleDate;
 
@@ -31,6 +33,14 @@ public class ArticleDetailDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getArticleSynopsis() {
+        return articleSynopsis;
+    }
+
+    public void setArticleSynopsis(String articleSynopsis) {
+        this.articleSynopsis = articleSynopsis;
     }
 
     public Long getUserId() {

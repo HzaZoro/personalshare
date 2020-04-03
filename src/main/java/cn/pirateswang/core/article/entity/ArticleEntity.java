@@ -26,6 +26,11 @@ public class ArticleEntity extends BaseEntity {
     private String articleTitle;
 
     /**
+     * 文章简介
+     */
+    private String articleSynopsis;
+
+    /**
      * 浏览量
      */
     private Long articleViews;
@@ -42,6 +47,14 @@ public class ArticleEntity extends BaseEntity {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getArticleSynopsis() {
+        return articleSynopsis;
+    }
+
+    public void setArticleSynopsis(String articleSynopsis) {
+        this.articleSynopsis = articleSynopsis;
     }
 
     public void setUserId(Long userId) {

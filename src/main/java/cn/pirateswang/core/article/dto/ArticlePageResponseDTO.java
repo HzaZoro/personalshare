@@ -1,6 +1,5 @@
 package cn.pirateswang.core.article.dto;
 
-import cn.pirateswang.core.article.entity.ArticleEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
@@ -13,6 +12,8 @@ public class ArticlePageResponseDTO {
     private Date articleDate;
     
     private String articleTitle;
+
+    private String articleSynopsis;
     
     private Long classifyId;
     
@@ -30,6 +31,14 @@ public class ArticlePageResponseDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getArticleSynopsis() {
+        return articleSynopsis;
+    }
+
+    public void setArticleSynopsis(String articleSynopsis) {
+        this.articleSynopsis = articleSynopsis;
     }
 
     public String getClassifyName() {

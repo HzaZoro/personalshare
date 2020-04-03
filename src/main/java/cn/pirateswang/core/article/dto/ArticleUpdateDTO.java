@@ -8,6 +8,8 @@ public class ArticleUpdateDTO {
 
     private String articleTitle;
 
+    private String articleSynopsis;
+
     private String articleContent;
 
     public Long getClassifyId() {
@@ -40,5 +42,13 @@ public class ArticleUpdateDTO {
 
     public void setArticleTitle(String articleTitle) {
         this.articleTitle = articleTitle;
+    }
+
+    public String getArticleSynopsis() {
+        return articleSynopsis;
+    }
+
+    public void setArticleSynopsis(String articleSynopsis) {
+        this.articleSynopsis = articleSynopsis;
     }
 }
