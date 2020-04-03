@@ -44,4 +44,9 @@ public class ArticleController {
         return articleService.disable(articleId);
     }
     
+    @GetMapping("/delete")
+    public ResultVO<?> delete(@RequestParam("articleId") Long articleId){
+        return articleService.delete(articleId);
+    }
+    
 }

@@ -19,4 +19,6 @@ public interface ArticleService extends BaseService<ArticleEntity> {
     public ResultVO<?> enable(Long articleId);
 
     public ResultVO<?> disable(Long articleId);
+    
+    public ResultVO<?> delete(Long articleId);
 }

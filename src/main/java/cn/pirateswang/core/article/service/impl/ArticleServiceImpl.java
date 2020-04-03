@@ -282,4 +282,38 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
         log.info("<=====ArticleServiceImpl<-----disable【E N D】");
         return ResultVOUtil.success();
     }
+
+    @Override
+    public ResultVO<?> delete(Long articleId) {
+        log.info("=====>ArticleServiceImpl----->delete【START】");
+        log.info("【文章删除】REQUEST: 文章主键ID: {}",articleId);
+
+        if(articleId == null){
+            log.info("【文章删除】article表主键ID为空");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_ID_IS_NULL);
+        }
+
+        ArticleEntity articleEntity = this.getUnDeleted(articleId);
+        if(articleEntity == null){
+            log.info("【文章删除】该文章信息不存在或已被删除");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_IS_NULL);
+        }
+
+        List<ArticleContentEntity> articlContentList = articleContentService.findArticlContentByArticlId(articleId);
+        
+        if(articlContentList != null && !articlContentList.isEmpty()){
+            log.info("【文章删除】发现{}条文章内容信息,需全部删除",articlContentList.size());
+            for(int cnt = 0;cnt < articlContentList.size();cnt ++){
+                ArticleContentEntity articleContentEntity = articlContentList.get(cnt);
+                articleContentEntity.setDeleteFlg(1);
+                articleContentService.save(articleContentEntity);
+            }
+        }else{
+            log.info("【文章删除】未发现文章内容信息，不需删除文章内容信息。");
+        }
+
+        log.info("【文章删除】文章已删除,articleId:{}",articleId);
+        log.info("<=====ArticleServiceImpl<-----delete【E N D】");
+        return ResultVOUtil.success();
+    }
 }
