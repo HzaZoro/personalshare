@@ -11,8 +11,6 @@ public class ServiceConfig {
     
     private List<String> whiteListDomainList;
     
-    private List<String> blackVisitList;
-    
     private String userLoginRsaPublicKey;
     
     private String userLoginRsaPrivateKey;
@@ -31,14 +29,6 @@ public class ServiceConfig {
 
     public void setUserLoginRsaPrivateKey(String userLoginRsaPrivateKey) {
         this.userLoginRsaPrivateKey = userLoginRsaPrivateKey;
-    }
-
-    public List<String> getBlackVisitList() {
-        return blackVisitList;
-    }
-
-    public void setBlackVisitList(List<String> blackVisitList) {
-        this.blackVisitList = blackVisitList;
     }
 
     public List<String> getWhiteListDomainList() {
