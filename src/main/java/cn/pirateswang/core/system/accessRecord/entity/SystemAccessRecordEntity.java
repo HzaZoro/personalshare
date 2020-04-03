@@ -1,4 +1,4 @@
-package cn.pirateswang.core.systemAccessRecord.entity;
+package cn.pirateswang.core.system.accessRecord.entity;
 
 import cn.pirateswang.common.base.entity.BaseEntity;
 

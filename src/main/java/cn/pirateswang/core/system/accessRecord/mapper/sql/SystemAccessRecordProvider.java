@@ -1,4 +1,4 @@
-package cn.pirateswang.core.systemAccessRecord.mapper.sql;
+package cn.pirateswang.core.system.accessRecord.mapper.sql;
 
 import cn.pirateswang.common.base.mapper.sql.BaseSqlProvider;
 

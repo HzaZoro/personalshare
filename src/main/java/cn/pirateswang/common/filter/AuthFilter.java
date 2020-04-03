@@ -3,11 +3,14 @@ package cn.pirateswang.common.filter;
 import cn.pirateswang.common.config.ServiceConfig;
 import cn.pirateswang.common.config.TokenConfig;
 import cn.pirateswang.common.publicEnum.ErrorEnum;
+import cn.pirateswang.common.publicEnum.SystemInterfaceInstance;
 import cn.pirateswang.common.publicVO.CurrentUser;
 import cn.pirateswang.common.publicVO.ResultVO;
+import cn.pirateswang.common.tools.SystemBlackListTools;
 import cn.pirateswang.common.utils.*;
-import cn.pirateswang.core.systemAccessRecord.entity.SystemAccessRecordEntity;
-import cn.pirateswang.core.systemAccessRecord.service.SystemAccessRecordService;
+import cn.pirateswang.core.system.accessRecord.entity.SystemAccessRecordEntity;
+import cn.pirateswang.core.system.accessRecord.service.SystemAccessRecordService;
+import cn.pirateswang.core.system.blackList.entity.SystemBlackListEntity;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -42,6 +45,8 @@ public class AuthFilter implements Filter {
     
     @Autowired
     private SystemAccessRecordService systemAccessRecordService;
+    
+    private SystemBlackListTools systemBlackListTools = SystemBlackListTools.getInstance();
 
     private static Set<String> cacheUrlBuffer = new HashSet<>();
     
@@ -78,12 +83,12 @@ public class AuthFilter implements Filter {
         
         String ip = StringUtils.isBlank(request.getHeader("x-forwarded-for")) ? request.getRemoteAddr():request.getHeader("x-forwarded-for");
         log.info("【访问IP】: {}",ip);
-        int serverPort = request.getServerPort();
+        Integer serverPort = request.getServerPort();
         log.info("【访问端口】: {}",serverPort);
 
         if(StringUtils.isBlank(ip)){
             log.info("访问IP为空,验证不通过");
-            response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_VISIT)));
+            response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_IP_VISIT)));
             response.getWriter().flush();
             return;
         }
@@ -98,23 +103,40 @@ public class AuthFilter implements Filter {
         //访问路径
         systemAccessRecordEntity.setRequestPath(servletPath);
         
+        List<SystemBlackListEntity> blackVisitList = systemBlackListTools.getBlackList();
         
-        //系统访问黑名单设置
-        List<String> blackVisitList = serviceConfig.getBlackVisitList();
         if(blackVisitList != null && !blackVisitList.isEmpty()){
-            log.info("系统有设置【黑名单】");
-            if(checkDomain(ip,blackVisitList)){
-                log.info("该访问【IP】: {}，被系统限制访问",ip);
-                response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_VISIT)));
-                response.getWriter().flush();
-                this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_VISIT);
-                return;
-            }else{
-                log.info("访问IP未在系统设置【黑名单】内");
+            log.info("【黑名单拦截】系统有设置访问黑名单");
+            for (int cnt = 0;cnt <blackVisitList.size();cnt ++){
+                SystemBlackListEntity systemBlackListEntity = blackVisitList.get(cnt);
+                String blackIp = systemBlackListEntity.getIp();
+                Integer blackPort = systemBlackListEntity.getPort();
+                Integer type = systemBlackListEntity.getType();
+                if(type != null && type.intValue() == SystemInterfaceInstance.BLACK_TYPE_INSTANCE.IP_TYPE.intValue()){
+                    if(StringUtils.equals(ip,blackIp)){
+                        log.info("【黑名单拦截】IP: {} Port:{} 拦截类型:{}",blackIp,blackPort,"IP拦截");
+                        log.info("【黑名单拦截】该访问IP被禁止,IP:{}",ip);
+                        response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_IP_VISIT)));
+                        response.getWriter().flush();
+                        this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_IP_VISIT);
+                        return;
+                    }
+                }else if(type != null && type.intValue() == SystemInterfaceInstance.BLACK_TYPE_INSTANCE.PORT_TYPE.intValue()){
+                    if(serverPort != null && blackPort != null && blackPort.intValue() == serverPort.intValue()){
+                        log.info("【黑名单拦截】===> IP: {} Port:{} 拦截类型:{}",blackIp,blackPort,"端口拦截");
+                        log.info("【黑名单拦截】禁止访问该端口:{},IP:{}",serverPort,ip);
+                        response.getWriter().write(JSON.toJSONString(ResultVOUtil.error(ErrorEnum.ILLEGAL_PORT_VISIT)));
+                        response.getWriter().flush();
+                        this.insertSystemRecord(systemAccessRecordEntity,ErrorEnum.ILLEGAL_PORT_VISIT);
+                        return;
+                    }
+                }
             }
+            log.info("【黑名单拦截】该访问被允许");
+        }else{
+            log.info("【黑名单拦截】系统未配置访问黑名单");
         }
-
-
+        
         //系统白名单设置
         List<String> whiteListDomainList = serviceConfig.getWhiteListDomainList();
         if(whiteListDomainList == null || whiteListDomainList.isEmpty()){

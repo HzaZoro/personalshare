@@ -1,8 +1,8 @@
-package cn.pirateswang.core.systemAccessRecord.service.impl;
+package cn.pirateswang.core.system.accessRecord.service.impl;
 
 import cn.pirateswang.common.base.service.impl.BaseServiceImpl;
-import cn.pirateswang.core.systemAccessRecord.entity.SystemAccessRecordEntity;
-import cn.pirateswang.core.systemAccessRecord.service.SystemAccessRecordService;
+import cn.pirateswang.core.system.accessRecord.entity.SystemAccessRecordEntity;
+import cn.pirateswang.core.system.accessRecord.service.SystemAccessRecordService;
 import org.springframework.stereotype.Service;
 
 @Service
