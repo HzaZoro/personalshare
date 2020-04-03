@@ -34,5 +34,14 @@ public class ArticleController {
         return articleService.detail(articleId);
     }
     
+    @GetMapping("/enable")
+    public ResultVO<?> enable(@RequestParam("articleId") Long articleId){
+        return articleService.enable(articleId);
+    }
+
+    @GetMapping("/disable")
+    public ResultVO<?> disable(@RequestParam("articleId") Long articleId){
+        return articleService.disable(articleId);
+    }
     
 }

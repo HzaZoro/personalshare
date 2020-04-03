@@ -236,4 +236,50 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
         log.info("<=====ArticleServiceImpl<-----detail【E N D】");
         return ResultVOUtil.success(detail);
     }
+
+    @Override
+    public ResultVO<?> enable(Long articleId) {
+        log.info("=====>ArticleServiceImpl----->enable【START】");
+        log.info("【文章启用】REQUEST: 文章主键ID: {}",articleId);
+
+        if(articleId == null){
+            log.info("【文章启用】article表主键ID为空");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_ID_IS_NULL);
+        }
+
+        ArticleEntity articleEntity = this.getUnDeleted(articleId);
+        if(articleEntity == null){
+            log.info("【文章启用】该文章信息不存在或已被删除");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_IS_NULL);
+        }
+
+        articleEntity.setInUse(1);
+        this.save(articleEntity);
+        log.info("【文章启用】文章已启用,articleId:{}",articleId);
+        log.info("<=====ArticleServiceImpl<-----enable【E N D】");
+        return ResultVOUtil.success();
+    }
+
+    @Override
+    public ResultVO<?> disable(Long articleId) {
+        log.info("=====>ArticleServiceImpl----->disable【START】");
+        log.info("【文章停用】REQUEST: 文章主键ID: {}",articleId);
+
+        if(articleId == null){
+            log.info("【文章停用】article表主键ID为空");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_ID_IS_NULL);
+        }
+
+        ArticleEntity articleEntity = this.getUnDeleted(articleId);
+        if(articleEntity == null){
+            log.info("【文章停用】该文章信息不存在或已被删除");
+            return ResultVOUtil.error(ErrorEnum.ARTICLE_IS_NULL);
+        }
+
+        articleEntity.setInUse(0);
+        this.save(articleEntity);
+        log.info("【文章停用】文章已停用,articleId:{}",articleId);
+        log.info("<=====ArticleServiceImpl<-----disable【E N D】");
+        return ResultVOUtil.success();
+    }
 }
