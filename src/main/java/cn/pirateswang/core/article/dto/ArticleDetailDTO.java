@@ -1,5 +1,7 @@
 package cn.pirateswang.core.article.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ArticleDetailDTO {
@@ -12,6 +14,7 @@ public class ArticleDetailDTO {
 
     private String articleTitle;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:ss:mm")
     private Date articleDate;
 
     private Long articleViews;

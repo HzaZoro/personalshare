@@ -8,6 +8,7 @@ import cn.pirateswang.core.article.mapper.sql.ArticleProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 import java.util.Date;
 import java.util.List;
@@ -20,4 +21,7 @@ public interface ArticleMapper extends BaseMapper<ArticleEntity> {
 
     @SelectProvider(type = ArticleProvider.class,method = "detail")
     public ArticleDetailDTO detail(@Param("articleId") Long articleId );
+    
+    @UpdateProvider(type = ArticleProvider.class,method = "updateArticleViews")
+    public int updateArticleViews(@Param("articleId")Long articleId);
 }

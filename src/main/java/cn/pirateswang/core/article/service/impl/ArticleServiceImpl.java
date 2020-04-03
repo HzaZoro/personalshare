@@ -232,6 +232,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
         }
 
         detail.setArticleContent(articleContentEntity.getArticleContent());
+        //添加浏览计数
+        articleMapper.updateArticleViews(articleId);
+        log.info("【文章详情】已增加用户浏览纪录数");
         log.info("【文章详情】已查询出文章相关信息");
         log.info("<=====ArticleServiceImpl<-----detail【E N D】");
         return ResultVOUtil.success(detail);

@@ -37,4 +37,10 @@ public class ArticleProvider extends BaseSqlProvider {
         return sql.toString();
     }
     
+    public String updateArticleViews(@Param("articleId")Long articleId){
+        StringBuffer sql = new StringBuffer();
+        sql.append(" update article set article_views = article_views + 1 where id = #{articleId} and delete_flg = 0 ");
+        return sql.toString();
+    }
+    
 }
