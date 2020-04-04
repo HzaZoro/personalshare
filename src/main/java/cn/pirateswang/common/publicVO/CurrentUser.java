@@ -10,6 +10,16 @@ public class CurrentUser {
     
     private Integer age;
 
+    private String userImage;
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
     public Long getId() {
         return id;
     }
