@@ -48,5 +48,5 @@ public class ArticleController {
     public ResultVO<?> delete(@RequestParam("articleId") Long articleId){
         return articleService.delete(articleId);
     }
-    
+
 }

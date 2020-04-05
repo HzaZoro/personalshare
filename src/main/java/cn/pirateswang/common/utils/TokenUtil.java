@@ -73,6 +73,12 @@ public class TokenUtil {
      */
     public static ResultVO<CurrentUser> verifyToken(String token){
         try {
+            if(StringUtils.isBlank(token)){
+                //token验证不通过
+                log.error("【TOKEN验证不通过】,token为空:{}",token);
+                return ResultVOUtil.error(ErrorEnum.TOKEN_VERIFY_FAILURE);
+            }
+
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(self.tokenConfig.getCookieSecrete())).build();
             DecodedJWT jwt = verifier.verify(token);
             Map<String, Claim> claimMap = jwt.getClaims();

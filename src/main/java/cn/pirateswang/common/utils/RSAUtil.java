@@ -282,10 +282,10 @@ public class RSAUtil {
             publicKeyString = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDSUmOXyQmYYSnZacp0btvAZCOvCNPtzixAp7eJmzmAG4mgy/VgrY/s1BDLh9qTNHIRWXepUtwMrf1kYul/A45qE/2oxIbeeq4238YDWQ7ModOVXR9ytEHsT0jpCFvoYfYXYZnnoWRrLIBylQeXzqxbLDxxBxGCs4AjoRKh5S7nNQIDAQAB";
             privateKeyString = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANJSY5fJCZhhKdlpynRu28BkI68I0+3OLECnt4mbOYAbiaDL9WCtj+zUEMuH2pM0chFZd6lS3Ayt/WRi6X8DjmoT/ajEht56rjbfxgNZDsyh05VdH3K0QexPSOkIW+hh9hdhmeehZGssgHKVB5fOrFssPHEHEYKzgCOhEqHlLuc1AgMBAAECgYEAqTB9zWx7u4juEWd45ZEIVgw4aGXBllt0Xc6NZrTn3JZKcH+iNNNqJCm0GQaAXkqiODKwgBWXzttoK4kmLHa/6D7rXouWN8PGYXj7DHUNzyOe3IgmzYanowp/A8gu99mJQJzyhZGQ+Uo9dZXAgUDin6HAVLaxF3yWD8/yTKWN4UECQQD8Q72r7qdAfzdLMMSQl50VxRmbdhQYbo3D9FmwUw6W1gy2jhJyPXMi0JZKdKaqhxMZIT3zy4jYqw8/0zF2xc5/AkEA1W+n24Ef3ucbPgyiOu+XGwW0DNpJ9F8D3ZkEKPBgjOMojM7oqlehRwgy52hU+HaL4Toq9ghL1SwxBQPxSWCYSwJAGQUO9tKAvCDh9w8rL7wZ1GLsG0Mm0xWD8f92NcrHE6a/NAv7QGFf3gAaJ+BR92/WMRPe9SMmu3ab2JS1vzX3OQJAdN70/T8RYo8N3cYxNzBmf4d59ee5wzQb+8WD/57QX5UraR8LS+s8Bpc4uHnqvTq8kZG2YI5eZ9YQ6XwlLVbVTQJAKOSXNT+XEPWaol1YdWZDvr2m/ChbX2uwz52s8577Tey96O4Z6S/YA7V6Fr7hZEzkNF+K0LNUd79EOB6m2eQq5w==";
             // 待加密数据
-            String data = "123";
+            String data = "H19931001521";
             // 公钥加密
-//            String encrypt = RSAUtil.encryptByPubKey(data, publicKeyString);
-            String encrypt = "DfWzaLapV22fauV0ZAZmGbu8nm04CNgvSN27PeCbUj4yWso2bp7qN1x8GOng/Lwt1Sg99IhLsnLSZdOhZCJsIHnN3jabRI3iaEGD8FEndh2hQSdAvNZgPTeFa+H08acgwXkY5UkZQEj8lCQXUgeTJtranqw/8Gk5O/GEkMnuy9s=";
+            String encrypt = RSAUtil.encryptByPubKey(data, publicKeyString);
+//            String encrypt = "DfWzaLapV22fauV0ZAZmGbu8nm04CNgvSN27PeCbUj4yWso2bp7qN1x8GOng/Lwt1Sg99IhLsnLSZdOhZCJsIHnN3jabRI3iaEGD8FEndh2hQSdAvNZgPTeFa+H08acgwXkY5UkZQEj8lCQXUgeTJtranqw/8Gk5O/GEkMnuy9s=";
             // 私钥解密
             String decrypt = RSAUtil.decryptByPriKey(encrypt);
 

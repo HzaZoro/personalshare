@@ -3,8 +3,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: H19931001521
-#    url: jdbc:mysql://127.0.0.1:3306/pw_ps?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    url: jdbc:mysql://129.28.182.5:8089/pw_ps?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/pw_ps?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+#    url: jdbc:mysql://129.28.182.5:8089/pw_ps?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 8
@@ -45,11 +45,12 @@ token:
   cookieName: personalToken
   cookieSecrete: AHUMAN
   effectiveTime: 7200
+  domain: pirateswang.cn
   exclude:
     urls:
       - /auth/
-      - /article/
-    
+      - /article/page
+
 service:
   whiteListDomainList: 
     - 192.168.10.172

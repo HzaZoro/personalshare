@@ -17,6 +17,8 @@ public class TokenConfig {
     
     private Integer effectiveTime;
 
+    private String domain;
+
     public Integer getEffectiveTime() {
         return effectiveTime;
     }
@@ -25,7 +27,14 @@ public class TokenConfig {
         this.effectiveTime = effectiveTime;
     }
 
-    
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
     public Exclude getExclude() {
         return exclude;
     }

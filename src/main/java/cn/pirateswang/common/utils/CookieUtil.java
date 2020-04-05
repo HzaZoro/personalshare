@@ -34,13 +34,13 @@ public class CookieUtil {
         String token = TokenUtil.getToken(currentUser);
         String cookieName = self.tokenConfig.getCookieName();
         Integer effectiveTime = self.tokenConfig.getEffectiveTime();
-        set(response,cookieName,token,effectiveTime);
+        set(response,cookieName,token,effectiveTime,self.tokenConfig.getDomain());
         return token;
     }
     
     public static void clearCookie(HttpServletResponse response){
         String cookieName = self.tokenConfig.getCookieName();
-        set(response,cookieName,"clearCookie",0);
+        set(response,cookieName,"clearCookie",0,self.tokenConfig.getDomain());
     }
     
     public static Cookie getCookie(HttpServletRequest request,String cookieName){
@@ -51,11 +51,17 @@ public class CookieUtil {
             return null;            
         }
     }
-    
-    private static void set(HttpServletResponse response,String cookieName,String token,Integer effectiveTime){
-        Cookie cookie = new Cookie(cookieName, token);
+
+    private static Cookie getNewCookie(String cookieName,String value,Integer effectiveTime,String domain){
+        Cookie cookie = new Cookie(cookieName, value);
         cookie.setMaxAge(effectiveTime);
         cookie.setPath("/");
+        cookie.setDomain(domain);
+        return cookie;
+    }
+    
+    private static void set(HttpServletResponse response,String cookieName,String token,Integer effectiveTime,String domain){
+        Cookie cookie = getNewCookie(cookieName, token, effectiveTime,domain);
         response.addCookie(cookie);
     }
     
@@ -85,9 +91,7 @@ public class CookieUtil {
         String headerCookie = request.getHeader(cookieName);
         if(StringUtils.isNotBlank(headerCookie)){
             log.info("从【请求头】中发现系统所需token:{},重置该token至Cookie中");
-            Cookie cookie = new Cookie(cookieName, headerCookie);
-            cookie.setMaxAge(self.tokenConfig.getEffectiveTime());
-            cookie.setPath("/");
+            Cookie cookie = getNewCookie(cookieName, headerCookie,self.tokenConfig.getEffectiveTime(),self.tokenConfig.getDomain());
             cookieMap.put(cookieName,cookie);
             return cookieMap;
         }else{
@@ -99,9 +103,7 @@ public class CookieUtil {
             return cookieMap;
         }
 
-        Cookie cookie = new Cookie(cookieName, cookieInHeader);
-        cookie.setPath("/");
-        cookie.setMaxAge(self.tokenConfig.getEffectiveTime());
+        Cookie cookie = getNewCookie(cookieName, headerCookie,self.tokenConfig.getEffectiveTime(),self.tokenConfig.getDomain());
         cookieMap.put(cookieName,cookie);
         log.info("<==== readCookie 【E N D】");
         return cookieMap;
