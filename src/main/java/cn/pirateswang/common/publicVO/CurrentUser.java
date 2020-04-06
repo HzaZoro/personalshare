@@ -1,15 +1,24 @@
 package cn.pirateswang.common.publicVO;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "当前登陆用户信息")
 public class CurrentUser {
-    
+
+    @ApiModelProperty(value = "用户主键ID")
     private Long id;
-    
+
+    @ApiModelProperty(value = "用户名")
     private String userName;
 
-    private String userSex;
-    
+    @ApiModelProperty(value = "用户性别")
+    private String userGender;
+
+    @ApiModelProperty(value = "用户年龄")
     private Integer age;
 
+    @ApiModelProperty(value = "用户头像链接")
     private String userImage;
 
     public String getUserImage() {
@@ -44,12 +53,12 @@ public class CurrentUser {
         this.age = age;
     }
 
-    public String getUserSex() {
-        return userSex;
+    public String getUserGender() {
+        return userGender;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex;
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
     }
 
     public CurrentUser(Long id, String userName) {

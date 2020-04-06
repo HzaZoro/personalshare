@@ -45,11 +45,12 @@ token:
   cookieName: personalToken
   cookieSecrete: AHUMAN
   effectiveTime: 7200
-  domain: pirateswang.cn
+  domain:
   exclude:
     urls:
       - /auth/
       - /article/page
+      - /doc
 
 service:
   whiteListDomainList: 

@@ -32,7 +32,6 @@ public class CorsFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        log.info("【跨域设置】====>【START】");
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         response.setHeader("Access-Control-Allow-Origin", StringUtils.isBlank(request.getHeader("origin")) ? "*" : request.getHeader("origin"));
@@ -40,7 +39,6 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Max-Age","7200");
         response.setHeader("Access-Control-Allow-Headers","x-requested-with,Authorization,Content-Type,sign,source,"+tokenConfig.getCookieName());
         response.setHeader("Access-Control-Allow-Credentials","true");
-        log.info("【跨域设置】<====【E N D】");
         chain.doFilter(servletRequest,servletResponse);
     }
 

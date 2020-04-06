@@ -49,6 +49,7 @@ token:
     urls:
       - /auth/
       - /article/
+      - /doc
 
 service:
   whiteListDomainList:

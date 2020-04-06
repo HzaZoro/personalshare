@@ -1,15 +1,24 @@
 package cn.pirateswang.core.article.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "文章更新信息")
 public class ArticleUpdateDTO {
 
+    @ApiModelProperty(value = "文章主键ID",required = true)
     private Long id;
 
+    @ApiModelProperty(value = "文章分类主键ID",required = true)
     private Long classifyId;
 
+    @ApiModelProperty(value = "文章标题",required = true)
     private String articleTitle;
 
+    @ApiModelProperty(value = "文章简介",required = false)
     private String articleSynopsis;
 
+    @ApiModelProperty(value = "文章内容",required = false)
     private String articleContent;
 
     public Long getClassifyId() {
