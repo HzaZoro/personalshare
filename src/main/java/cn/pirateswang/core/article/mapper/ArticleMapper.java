@@ -17,7 +17,7 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<ArticleEntity> {
     
     @SelectProvider(type = ArticleProvider.class,method = "queryByParams")
-    public List<ArticlePageResponseDTO> queryByParams(@Param("articleTitle") String articleTitle, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    public List<ArticlePageResponseDTO> queryByParams(@Param("articleTitle") String articleTitle,@Param("userName") String userName,@Param("classifyId") Long classifyId, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     @SelectProvider(type = ArticleProvider.class,method = "detail")
     public ArticleDetailDTO detail(@Param("articleId") Long articleId );

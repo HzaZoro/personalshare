@@ -12,6 +12,12 @@ public class ArticlePageRequestDTO extends BaseSearchPageDTO {
     @ApiModelProperty(value="文章标题",required = false)
     private String articleTitle;
 
+    @ApiModelProperty(value="作者",required = false)
+    private String userName;
+
+    @ApiModelProperty(value="文章分类",required = false)
+    private Long classifyId;
+
     @ApiModelProperty(value="文章发表开始时间",required = false)
     private Date startDate;
 
@@ -40,5 +46,21 @@ public class ArticlePageRequestDTO extends BaseSearchPageDTO {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getClassifyId() {
+        return classifyId;
+    }
+
+    public void setClassifyId(Long classifyId) {
+        this.classifyId = classifyId;
     }
 }

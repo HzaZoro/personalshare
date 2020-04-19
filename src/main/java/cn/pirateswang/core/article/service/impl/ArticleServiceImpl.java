@@ -52,7 +52,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleEntity> implement
         }
 
         Page<ArticleEntity> page = PageHelper.startPage(requestDTO.getPageNo(), requestDTO.getPageSize());
-        List<ArticlePageResponseDTO> articleList = articleMapper.queryByParams(requestDTO.getArticleTitle(), requestDTO.getStartDate(), requestDTO.getEndDate());
+        List<ArticlePageResponseDTO> articleList = articleMapper.queryByParams(requestDTO.getArticleTitle(),
+                requestDTO.getUserName(),requestDTO.getClassifyId(),requestDTO.getStartDate(), requestDTO.getEndDate());
         if(articleList != null && !articleList.isEmpty()){
             log.info("【查询文章分页】共查询到{}条记录",articleList.size());
         }else{

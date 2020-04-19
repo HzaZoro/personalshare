@@ -8,15 +8,21 @@ import java.util.Date;
 
 public class ArticleProvider extends BaseSqlProvider {
     
-    public String queryByParams(@Param("articleTitle") String articleTitle, @Param("startDate") Date startDate, 
-                                @Param("endDate") Date endDate){
+    public String queryByParams(@Param("articleTitle") String articleTitle,@Param("userName") String userName,
+                                @Param("classifyId") Long classifyId, @Param("startDate") Date startDate, @Param("endDate") Date endDate){
         StringBuffer sql = new StringBuffer();
         sql.append(" select a.id,a.article_date,a.article_title,a.article_views,a.classify_id,a.user_id,a.article_synopsis,u.user_name,c.classify_name from article a ");
         sql.append(" left join user_info u on a.user_id = u.id and u.delete_flg = 0 ");
         sql.append(" left join article_classify c on c.id = a.classify_id and c.delete_flg = 0 ");
         sql.append(" where a.delete_flg = 0 and a.in_use = 1  ");
         if(StringUtils.isNotBlank(articleTitle)){
-            sql.append(" and a.article_title like %#{articleTitle}% ");
+            sql.append(" and a.article_title like concat('%', #{articleTitle}, '%') ");
+        }
+        if(StringUtils.isNotBlank(userName)){
+            sql.append(" and u.user_name like concat('%', #{userName}, '%') ");
+        }
+        if(classifyId != null){
+            sql.append(" and c.id = #{classifyId} ");
         }
         if(startDate != null){
             sql.append(" and a.article_date >= #{startDate} ");
